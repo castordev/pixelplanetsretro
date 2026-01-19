@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Planets Distance</title>
+    <link rel="stylesheet" href="{% static 'planets/style.css' %}">
+    <link rel="stylesheet" href="{% static 'planets/colors.css' %}">
+        <script>
+            (function(){
+                try {
+                    var k = 'planets_crt_on';
+                    var v = localStorage.getItem(k);
+                    if (v === null || v === '1') document.documentElement.classList.add('crt-on');
+                } catch(e) {}
+            })();
+        </script>
+</head>
+<body>
+
+<button id="toggleSidebar" class="open-btn">☰</button>
+
+<button id="toggleCrt" class="crt-toggle-btn" type="button" aria-label="Toggle CRT filter" aria-pressed="false">CRT</button>
+
+<div id="sidebar" class="sidebar">
+  <nav>
+    <ul>
+                <li><a href="{% url 'orbits' %}">Órbitas</a></li>
+        <li><a href="{% url 'pagina2' %}">Página 2</a></li>
+        <li><a href="{% url 'pagina3' %}">Página 3</a></li>
+    </ul>
+  </nav>
+</div>
+
+
+
+    <h1>Planets Distance from Vigo</h1>
+    
+    <!-- Ventana Windows 95 pixelada -->
+    <div class="win95-window">
+        <div class="win95-titlebar">
+            <span class="win95-title">🪐 Solar System</span>
+            <div class="win95-buttons">
+                <button class="win95-btn win95-minimize">_</button>
+                <button class="win95-btn win95-maximize">□</button>
+                <button class="win95-btn win95-close">X</button>
+            </div>
+        </div>
+        <div class="win95-content">
+
+            {% for planet in planets %}         <!-- esto crea un bucle for en django-->
+                                                <!-- el bucle recorre la lista de planetas y genera un boton por cada planeta -->
+
+                <form action="{% url 'distance' planet %}" method="get" >
+
+                    <button type="submit" class="win95-app-btn">{{ planet|capfirst }}</button>                
+                </form>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+    <script src="{% static 'planets/sidebar.js' %}"></script>
+</body>
+</html>
+
+<!-- iniciar server : "py manage.py runserver" -->
